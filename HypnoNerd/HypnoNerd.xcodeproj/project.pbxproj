@@ -6,10 +6,17 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXFileReference section */
+		9A270D411AD3BA220028A8FE /* BNRHypnosisViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BNRHypnosisViewController.h; sourceTree = "<group>"; };
+		9A270D421AD3BA220028A8FE /* BNRHypnosisViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BNRHypnosisViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
 /* Begin PBXGroup section */
 		9A270D3A1AD3B3140028A8FE = {
 			isa = PBXGroup;
 			children = (
+				9A270D411AD3BA220028A8FE /* BNRHypnosisViewController.h */,
+				9A270D421AD3BA220028A8FE /* BNRHypnosisViewController.m */,
 			);
 			sourceTree = "<group>";
 		};
