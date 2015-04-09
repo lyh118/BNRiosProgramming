@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Chap6.HypnoNerd2/Chap6.HypnoNerd2.xcodeproj">
+      location = "self:Hypnosister.xcodeproj">
    </FileRef>
 </Workspace>
