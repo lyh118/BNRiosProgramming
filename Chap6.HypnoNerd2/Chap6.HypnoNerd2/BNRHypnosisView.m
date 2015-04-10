@@ -8,15 +8,10 @@
 
 #import "BNRHypnosisView.h"
 
-@interface BNRHypnosisView ()
-
-@property (strong, nonatomic) UIColor *circleColor;
-
-@end
-
 @implementation BNRHypnosisView
 
-// 배경색 투명으로 만들기 (안되요..ㅠㅠ)
+@synthesize circleColor;
+
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -40,12 +35,13 @@
                                             blue:blue
                                            alpha:1.0];
     self.circleColor = randomColor;
-    
+    [self setNeedsDisplay];
 }
 
-- (void)setCircleColor:(UIColor *)circleColor
+
+- (void)changeCircleColor:(UIColor *)circleColor
 {
-    _circleColor = circleColor;
+    self.circleColor = circleColor;
     [self setNeedsDisplay];
 }
 

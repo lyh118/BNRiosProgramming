@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "BNRHypnosisViewController.h"
 #import "BNRReminderViewController.h"
+#import "BNRQuizViewController.h"
 
 @interface AppDelegate ()
 
@@ -21,14 +22,20 @@
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
+    // 첫번째탭
     BNRHypnosisViewController *hvc = [[BNRHypnosisViewController alloc] init];
     
+    // 두번째탭 - xib파일을 연결해 주기 위해 bundle 사용
     NSBundle *appBundle = [NSBundle mainBundle];
-    
     BNRReminderViewController *rvc = [[BNRReminderViewController alloc] initWithNibName:@"BNRReminderViewController" bundle:appBundle];
     
+    // 세번째탭
+    BNRQuizViewController *qvc = [[BNRQuizViewController alloc] init];
+    
+    
+    // 탭생성
     UITabBarController *tabBarController = [[UITabBarController alloc] init];
-    tabBarController.viewControllers = @[hvc,rvc];
+    tabBarController.viewControllers = @[hvc,rvc,qvc];
     
     //self.window.rootViewController = hvc;
     //self.window.rootViewController = rvc;
