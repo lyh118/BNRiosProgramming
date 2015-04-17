@@ -12,6 +12,8 @@
 	<dict>
 		<key>45CFCF33E56AADF961EA16E380C74186B22335BA</key>
 		<string>https://github.com/lyh118/BNRiosProgramming.git</string>
+		<key>AE9C8A1B304943C45DCADB11C884505ECABDA3AA</key>
+		<string>https://github.com/lyh118/Hypnosister2.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>Untitled.xcworkspace</string>
@@ -19,6 +21,8 @@
 	<dict>
 		<key>45CFCF33E56AADF961EA16E380C74186B22335BA</key>
 		<string>..</string>
+		<key>AE9C8A1B304943C45DCADB11C884505ECABDA3AA</key>
+		<string>../Hypnosister/</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/lyh118/BNRiosProgramming.git</string>
@@ -35,6 +39,14 @@
 			<string>45CFCF33E56AADF961EA16E380C74186B22335BA</string>
 			<key>IDESourceControlWCCName</key>
 			<string>BNRiosProgrammin</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>AE9C8A1B304943C45DCADB11C884505ECABDA3AA</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Hypnosister</string>
 		</dict>
 	</array>
 </dict>

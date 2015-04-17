@@ -5,34 +5,34 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>87C914E7-2949-4328-A03C-90F0F5AB51C8</string>
+	<string>96F249A2-367D-4888-9231-3FC3A05237A3</string>
 	<key>IDESourceControlProjectName</key>
 	<string>Hypnosister</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>1CD1B4EBD4BEFE3889580B2C96484CF7B373D366</key>
-		<string>https://github.com/lyh118/Hypnosister.git</string>
+		<key>AE9C8A1B304943C45DCADB11C884505ECABDA3AA</key>
+		<string>https://github.com/lyh118/Hypnosister2.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>Hypnosister.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>1CD1B4EBD4BEFE3889580B2C96484CF7B373D366</key>
+		<key>AE9C8A1B304943C45DCADB11C884505ECABDA3AA</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/lyh118/Hypnosister.git</string>
+	<string>https://github.com/lyh118/Hypnosister2.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>1CD1B4EBD4BEFE3889580B2C96484CF7B373D366</string>
+	<string>AE9C8A1B304943C45DCADB11C884505ECABDA3AA</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>1CD1B4EBD4BEFE3889580B2C96484CF7B373D366</string>
+			<string>AE9C8A1B304943C45DCADB11C884505ECABDA3AA</string>
 			<key>IDESourceControlWCCName</key>
 			<string>Hypnosister</string>
 		</dict>
