@@ -154,6 +154,34 @@
 }
 
 /*
+ * Chap9.은메달 과제: 재정렬 막기
+ */
+- (BOOL)        tableView:(UITableView *)tableView
+    canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSInteger rowsInSection = [[[BNRItemStore sharedStore] allItems] count]-1;
+    
+    if (indexPath.row == rowsInSection) // Don't move the first row
+        return NO;
+    
+    return YES;
+}
+
+/*
+ * Editing Mode로 전환되지 않습니다
+ */
+- (BOOL)        tableView:(UITableView *)tableView
+    canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSInteger rowsInSection = [[[BNRItemStore sharedStore] allItems] count]-1;
+    
+    if (indexPath.row == rowsInSection)
+        return NO;
+    
+    return YES;
+}
+
+/*
  * Chap.9 동메달 과제
  * 'Delete'버튼 -> 'Remove'로 변경
  */
