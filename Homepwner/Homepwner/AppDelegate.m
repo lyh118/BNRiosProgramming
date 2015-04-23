@@ -18,11 +18,15 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
     BNRItemsViewController *itemViewController = [[BNRItemsViewController alloc] init];
     
     // 테이블뷰를 윈도우 계층구조상에 놓는다
     self.window.rootViewController = itemViewController;
+    self.window.backgroundColor = [UIColor whiteColor];
     
+    [self.window makeKeyAndVisible];
     return YES;
 }
 

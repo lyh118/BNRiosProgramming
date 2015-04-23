@@ -44,6 +44,8 @@
     self = [super init];
     if (self) {
         _privateItems = [[NSMutableArray alloc] init];
+        NSString *newItem = @"No More Items!";
+        [_privateItems addObject:newItem];
     }
     
     return self;
@@ -53,8 +55,11 @@
 {
     BNRItem *item = [BNRItem randomItem];
     
-    [self.privateItems addObject:item];
+    NSInteger rowsInSection = [self.privateItems count] - 1;
     
+    [self.privateItems insertObject:item atIndex:rowsInSection];
+    
+    /*
     if (item.valueInDollars > 50) {
         [self.overItems addObject:item];
         NSLog(@"VALUE_IN_DOLLARS_OVER=%i", item.valueInDollars);
@@ -62,8 +67,27 @@
         [self.underItems addObject:item];
         NSLog(@"VALUE_IN_DOLLARS_UNDER=%i", item.valueInDollars);
     }
-    
+    */
     return item;
+}
+
+- (void)removeItem:(BNRItem *)item
+{
+    [self.privateItems removeObjectIdenticalTo:item];
+}
+
+- (void)moveItemAtIndex:(NSUInteger)fromIndex
+                toIndex:(NSUInteger)toIndex
+{
+    if (fromIndex == toIndex) {
+        return;
+    }
+    
+    BNRItem *item = self.privateItems[fromIndex];
+    
+    [self.privateItems removeObjectAtIndex:fromIndex];
+    
+    [self.privateItems insertObject:item atIndex:toIndex];
 }
 
 

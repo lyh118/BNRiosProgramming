@@ -10,16 +10,22 @@
 #import "BNRItemStore.h"
 #import "BNRItem.h"
 
+@interface BNRItemsViewController()
+
+@property (nonatomic, strong) IBOutlet UIView *headerView;
+
+@end
+
 @implementation BNRItemsViewController
 
-/* ====== 초기화 ====== */
+/* ====== 초기화 S ====== */
 -(instancetype)init
 {
     self = [super initWithStyle:UITableViewStylePlain];
     if (self) {
-        for (int i=0; i<5; i++) {
+        /*for (int i=0; i<5; i++) {
             [[BNRItemStore sharedStore] createItem];
-        }
+        }*/
     }
     return self;
 }
@@ -28,15 +34,41 @@
 {
     return [self init];
 }
-/* ====== 초기화 ====== */
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    [self.tableView registerClass:[UITableViewCell class]
+           forCellReuseIdentifier:@"UITableViewCell"];
+
+    // 테이블뷰에 헤더뷰에 관해 알려준다
+    UIView *header = self.headerView;
+    [self.tableView setTableHeaderView:header];
+    
+}
+
+- (UIView *)headerView
+{
+    // headerView가 아직 로드되지 않았다면...
+    if(!_headerView) {
+        
+        // HeaderView.xib를 로드한다
+        [[NSBundle mainBundle] loadNibNamed:@"HeaderView"
+                                      owner:self
+                                    options:nil];
+    }
+    
+    return _headerView;
+}
+/* ====== 초기화 E ====== */
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 1;
 }
 
-- (NSString *)tableView:(UITableView *)tableView
-titleForHeaderInSection:(NSInteger)section
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     NSString *headerMsg;
     if (section == 0) {
@@ -53,10 +85,12 @@ titleForHeaderInSection:(NSInteger)section
  * tableView:numberOfRowsInSection: 과
  * tableView:cellForRowAtIndexPath: 를 반드시 구현해야 한다
  */
-- (NSInteger)tableView:(UITableView *)tableView
- numberOfRowsInSection:(NSInteger)section
+- (NSInteger)   tableView:(UITableView *)tableView
+    numberOfRowsInSection:(NSInteger)section
 {
     NSInteger rowsInSection;
+    rowsInSection = [[[BNRItemStore sharedStore] allItems] count];
+    /*
     switch (section) {
         case 0:
             rowsInSection = [[[BNRItemStore sharedStore] over50Items] count];
@@ -69,14 +103,14 @@ titleForHeaderInSection:(NSInteger)section
         default:
             break;
     }
-    
+    */
     NSLog(@"ROW_IN_SECTION(%li)=%li", section, (long)rowsInSection);
     
     return rowsInSection;
 }
 
-- (UITableViewCell *) tableView:(UITableView *)tableView
-          cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)   tableView:(UITableView *)tableView
+            cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     /*
      * cell 재사용 안함
@@ -97,14 +131,70 @@ titleForHeaderInSection:(NSInteger)section
     return cell;
 }
 
+- (void)    tableView:(UITableView *)tableView
+   commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
+    forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        NSArray *items = [[BNRItemStore sharedStore] allItems];
+        BNRItem *itme = items[indexPath.row];
+        [[BNRItemStore sharedStore] removeItem:itme];
+        
+        [tableView deleteRowsAtIndexPaths:@[indexPath]
+                         withRowAnimation:UITableViewRowAnimationFade];
+    }
+}
+
+- (void)    tableView:(UITableView *)tableView
+   moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
+          toIndexPath:(NSIndexPath *)destinationIndexPath
+{
+    [[BNRItemStore sharedStore] moveItemAtIndex:sourceIndexPath.row
+                                        toIndex:destinationIndexPath.row];
+}
+
+/*
+ * Chap.9 동메달 과제
+ * 'Delete'버튼 -> 'Remove'로 변경
+ */
+-(NSString *)   tableView:(UITableView *)tableView
+    titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return @"Remove";
+}
+
+/* ====== CHAP.9 ======*/
+- (IBAction)addNewItem:(id)sender
+{
+    //NSInteger lastRow = [self.tableView numberOfRowsInSection:0];
+
+    BNRItem *newItem = [[BNRItemStore sharedStore] createItem];
+    
+    NSInteger lastRow = [[[BNRItemStore sharedStore] allItems] indexOfObject:newItem];
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:lastRow inSection:0];
+    
+    [self.tableView insertRowsAtIndexPaths:@[indexPath]
+                          withRowAnimation:UITableViewRowAnimationTop];
+    
+}
+
+- (IBAction)toggleEditingMode:(id)sender
+{
+    if (self.isEditing) {
+        [sender setTitle:@"Edit" forState:UIControlStateNormal];
+        
+        [self setEditing:NO animated:YES];
+    } else {
+        [sender setTitle:@"Done" forState:UIControlStateNormal];
+        
+        [self setEditing:YES animated:YES];
+    }
+    
+}
+
 
 /* ====== 내부함수 ====== */
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    [self.tableView registerClass:[UITableViewCell class]
-           forCellReuseIdentifier:@"UITableViewCell"];
-}
+
 
 @end
