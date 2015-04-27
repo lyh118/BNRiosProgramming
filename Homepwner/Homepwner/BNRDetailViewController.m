@@ -7,6 +7,7 @@
 //
 
 #import "BNRDetailViewController.h"
+#import "BNRDateModifyController.h"
 #import "BNRItem.h"
 
 @interface BNRDetailViewController ()
@@ -15,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *serialNumberField;
 @property (weak, nonatomic) IBOutlet UITextField *valueField;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
+@property (weak, nonatomic) IBOutlet UIButton *editBtn;
 
 @end
 
@@ -35,7 +37,7 @@
     if (!dateFormatter) {
         dateFormatter = [[NSDateFormatter alloc] init];
         dateFormatter.dateStyle = NSDateIntervalFormatterMediumStyle;
-        dateFormatter.timeStyle = NSDateFormatterNoStyle;
+        dateFormatter.timeStyle = NSDateFormatterShortStyle;
     }
     
     self.dateLabel.text = [dateFormatter stringFromDate:item.dateCreated];
@@ -61,11 +63,32 @@
     item.valueInDollars = [self.valueField.text intValue];
 }
 
+/*
+ * Chap10.은메달과제
+ * - 퍼스트 리스폰더를 해제
+ */
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.view endEditing:YES];
+}
+
+/*
+ * Chap10.금메달과제
+ */
+- (IBAction)goDateModifyView:(id)sender
+{
+    BNRDateModifyController *dateModifyController = [[BNRDateModifyController alloc] init];
+    
+    dateModifyController.item = self.item;
+    
+    [self.navigationController pushViewController:dateModifyController animated:YES];
+}
+
+
 - (void)setItem:(BNRItem *)item
 {
     _item = item;
     self.navigationItem.title = _item.itemName;
 }
-
 
 @end

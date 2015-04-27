@@ -96,6 +96,10 @@
 {
     return _dateCreated;
 }
+- (void)setDateCreated:(NSDate *)date
+{
+    _dateCreated = date;
+}
 
 - (NSString *)description
 {
