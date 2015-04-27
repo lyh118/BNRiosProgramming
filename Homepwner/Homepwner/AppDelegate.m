@@ -22,8 +22,13 @@
     
     BNRItemsViewController *itemViewController = [[BNRItemsViewController alloc] init];
     
+    UINavigationController *navController = [[UINavigationController alloc]
+                                             initWithRootViewController:itemViewController];
+    
     // 테이블뷰를 윈도우 계층구조상에 놓는다
-    self.window.rootViewController = itemViewController;
+    //self.window.rootViewController = itemViewController;
+    // 네비게이션뷰를 윈도우 계층구조상에 놓는다
+    self.window.rootViewController = navController;
     self.window.backgroundColor = [UIColor whiteColor];
     
     [self.window makeKeyAndVisible];

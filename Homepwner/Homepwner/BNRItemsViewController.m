@@ -7,6 +7,7 @@
 //
 
 #import "BNRItemsViewController.h"
+#import "BNRDetailViewController.h"
 #import "BNRItemStore.h"
 #import "BNRItem.h"
 
@@ -15,6 +16,7 @@
 @property (nonatomic, strong) IBOutlet UIView *headerView;
 
 @end
+
 
 @implementation BNRItemsViewController
 
@@ -26,6 +28,17 @@
         /*for (int i=0; i<5; i++) {
             [[BNRItemStore sharedStore] createItem];
         }*/
+        
+        UINavigationItem *navItem = self.navigationItem;
+        navItem.title = @"Homepwner";
+        
+        UIBarButtonItem *bbi = [[UIBarButtonItem alloc]
+                                initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+                                target:self
+                                action:@selector(addNewItem:)];
+        
+        navItem.rightBarButtonItem = bbi;
+        navItem.leftBarButtonItem = self.editButtonItem;
     }
     return self;
 }
@@ -48,6 +61,15 @@
     
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self.tableView reloadData];
+}
+
+/*
+// UINavigationItem에 BarButtonItem 추가로 인한 삭제
 - (UIView *)headerView
 {
     // headerView가 아직 로드되지 않았다면...
@@ -61,6 +83,7 @@
     
     return _headerView;
 }
+*/
 /* ====== 초기화 E ====== */
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -68,7 +91,8 @@
     return 1;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+- (NSString *)      tableView:(UITableView *)tableView
+      titleForHeaderInSection:(NSInteger)section
 {
     NSString *headerMsg;
     if (section == 0) {
@@ -131,6 +155,9 @@
     return cell;
 }
 
+/*
+ * editing 모드로 전환 후 item을 삭제합니다.
+ */
 - (void)    tableView:(UITableView *)tableView
    commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
     forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -145,6 +172,10 @@
     }
 }
 
+/*
+ * View에서 item이 이동할때 dataSource도 같이 수정합니다.
+ * -- view에서 이동이 안되게 하는 방법이 필요!!
+ */
 - (void)    tableView:(UITableView *)tableView
    moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
           toIndexPath:(NSIndexPath *)destinationIndexPath
@@ -185,12 +216,31 @@
  * Chap.9 동메달 과제
  * 'Delete'버튼 -> 'Remove'로 변경
  */
--(NSString *)   tableView:(UITableView *)tableView
+- (NSString *)   tableView:(UITableView *)tableView
     titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return @"Remove";
 }
 
+/*
+ * TableView의 Row가 선택됐을때 호출됩니다
+ */
+- (void)        tableView:(UITableView *)tableView
+  didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    BNRDetailViewController *detailViewController = [[BNRDetailViewController alloc] init];
+    
+    NSArray *items = [[BNRItemStore sharedStore] allItems];
+    BNRItem *selectedItem = items[indexPath.row];
+    
+    detailViewController.item = selectedItem;
+    
+    [self.navigationController pushViewController:detailViewController animated:YES];
+}
+
+
+
+/* ====== 내부함수 ====== */
 /* ====== CHAP.9 ======*/
 - (IBAction)addNewItem:(id)sender
 {
@@ -207,6 +257,7 @@
     
 }
 
+// UINavigationItem에 BarButtonItem 추가로 인한 삭제
 - (IBAction)toggleEditingMode:(id)sender
 {
     if (self.isEditing) {
@@ -220,9 +271,5 @@
     }
     
 }
-
-
-/* ====== 내부함수 ====== */
-
 
 @end
