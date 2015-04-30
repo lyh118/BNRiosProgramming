@@ -40,6 +40,11 @@
 
 - (IBAction)setModifiedDate:(id)sender
 {
+    /*
+     * 자기 자신을 네비게이션 컨트롤러에서 제거
+     *
+     * 참고 : http://theeye.pe.kr/archives/881
+     */
     [self.navigationController popViewControllerAnimated:YES];
 }
 
