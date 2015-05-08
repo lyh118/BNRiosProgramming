@@ -49,6 +49,11 @@
         _serialNumber = sNumber;
         _valueInDollars = value;
         _dateCreated = [[NSDate alloc] init];
+        
+        // NSUUID 객체를 만들고 그것의 문자열을 가져온다
+        NSUUID *uuid = [[NSUUID alloc] init];
+        NSString *key = [uuid UUIDString];
+        _imageKey = key;
     }
     return self;
 }

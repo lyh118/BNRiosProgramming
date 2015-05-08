@@ -9,14 +9,19 @@
 #import "BNRDetailViewController.h"
 #import "BNRDateModifyController.h"
 #import "BNRItem.h"
+#import "BNRImageStore.h"
 
-@interface BNRDetailViewController ()
+@interface BNRDetailViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *nameField;
 @property (weak, nonatomic) IBOutlet UITextField *serialNumberField;
 @property (weak, nonatomic) IBOutlet UITextField *valueField;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
+
 @property (weak, nonatomic) IBOutlet UIButton *editBtn;
+@property (weak, nonatomic) IBOutlet UIButton *deleteBtn;
 
 @end
 
@@ -41,6 +46,12 @@
     }
     
     self.dateLabel.text = [dateFormatter stringFromDate:item.dateCreated];
+    
+    NSString *imageKey = self.item.imageKey;
+    
+    UIImage *imageToDisplay = [[BNRImageStore sharedStore] imageForKey:imageKey];
+    
+    self.imageView.image = imageToDisplay;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -63,11 +74,28 @@
     item.valueInDollars = [self.valueField.text intValue];
 }
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
+}
+
 /*
  * Chap10.은메달과제
  * - 퍼스트 리스폰더를 해제
  */
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+/*
+- (void)touchesBegan:(NSSet *)touches
+           withEvent:(UIEvent *)event
+{
+    [self.view endEditing:YES];
+}
+*/
+/*
+ * 키보드 숨기기
+ * View를 UIControl 인스턴스로 변경 후
+ */
+- (IBAction)backgroundTapped:(id)sender
 {
     [self.view endEditing:YES];
 }
@@ -89,6 +117,47 @@
 {
     _item = item;
     self.navigationItem.title = _item.itemName;
+}
+
+- (void)    imagePickerController:(UIImagePickerController *)picker
+    didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *image = info[UIImagePickerControllerOriginalImage];
+    
+    [[BNRImageStore sharedStore] setImage:image
+                                   forKey:self.item.imageKey];
+    
+    self.imageView.image = image;
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+// Chap11.ToolBar Camera Btn
+- (IBAction)takePicture:(id)sender
+{
+    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+    
+    /*
+     * 카메라가 있는 장치라면 사진을 찍고,
+     * 아니면 사진 라이브러리에서 사진을 가져온다
+     */
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    }else{
+        imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    }
+    
+    imagePicker.allowsEditing = YES;
+    imagePicker.delegate = self;
+    
+    [self presentViewController:imagePicker animated:YES completion:nil];
+}
+
+- (IBAction)deleteItemImage:(id)sender
+{
+    self.imageView.image = nil;
+    
+    [[BNRImageStore sharedStore] deleteImageForKey:self.item.imageKey];
 }
 
 @end

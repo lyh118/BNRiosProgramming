@@ -16,6 +16,8 @@
     NSDate  *_dateCreated;
 }
 
+@property (nonatomic, copy) NSString *imageKey;
+
 + (instancetype)randomItem;
 
 // 지정 초기화 메소드
